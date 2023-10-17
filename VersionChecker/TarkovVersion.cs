@@ -13,7 +13,7 @@ namespace VersionChecker
     public class TarkovVersion : Attribute
     {
         private int version;
-        public TarkovVersion() : this(0) { }
+        public TarkovVersion() : this(26535) { }
         public TarkovVersion(int version)
         {
             this.version = version;

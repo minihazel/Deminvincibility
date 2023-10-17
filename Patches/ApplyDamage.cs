@@ -4,6 +4,7 @@ using Aki.Reflection.Patching;
 using Deminvincibility;
 using EFT;
 using EFT.HealthSystem;
+using EFT.UI;
 using HarmonyLib;
 
 namespace Deminvincibility.Patches
@@ -24,8 +25,17 @@ namespace Deminvincibility.Patches
             {
                 if (__instance.Player != null && __instance.Player.IsYourPlayer)
                 {
+                    Logger.LogDebug(damage);
+                    ConsoleScreen.Log(" ============================= ");
+                    ConsoleScreen.Log(" ============================= ");
+                    ConsoleScreen.Log(" ============================= ");
+                    ConsoleScreen.Log($"INITIAL DAMAGE: {Convert.ToString(damage)}");
+                    ConsoleScreen.Log("");
+
                     healthController = __instance.Player.ActiveHealthController;
                     currentHealth = healthController.GetBodyPartHealth(bodyPart, false);
+                    ConsoleScreen.Log($"CURRENT HEALTH: {Convert.ToString(currentHealth.Current)}");
+                    ConsoleScreen.Log("");
 
                     if (DeminvicibilityPlugin.CustomDamageModeVal.Value != 100)
                     {
@@ -34,7 +44,46 @@ namespace Deminvincibility.Patches
 
                     if (DeminvicibilityPlugin.Keep1Health.Value && ((currentHealth.Current - damage) <= 0))
                     {
-                        if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Head And Thorax")
+                        float control = currentHealth.Current - damage;
+                        ConsoleScreen.Log(Convert.ToString(control));
+
+                        if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Head")
+                        {
+                            if (bodyPart == EBodyPart.Head)
+                            {
+                                damage = currentHealth.Current - 2f;
+                                currentHealth.Current = 2f;
+                                return false;
+                            }
+                            else
+                            {
+                                if (currentHealth.AtMinimum)
+                                {
+                                    Logger.LogDebug("Destroyed body part: " + bodyPart.ToString());
+                                    healthController.DestroyBodyPart(bodyPart, EDamageType.Bullet);
+                                    return false;
+                                }
+                            }
+                        }
+                        else if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Thorax")
+                        {
+                            if (bodyPart == EBodyPart.Chest)
+                            {
+                                damage = currentHealth.Current - 2f;
+                                currentHealth.Current = 2f;
+                                return false;
+                            }
+                            else
+                            {
+                                if (currentHealth.AtMinimum)
+                                {
+                                    Logger.LogDebug("Destroyed body part: " + bodyPart.ToString());
+                                    healthController.DestroyBodyPart(bodyPart, EDamageType.Bullet);
+                                    return false;
+                                }
+                            }
+                        }
+                        else if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Head And Thorax")
                         {
                             if (bodyPart == EBodyPart.Head || bodyPart == EBodyPart.Chest)
                             {
@@ -56,6 +105,9 @@ namespace Deminvincibility.Patches
                         {
                             damage = currentHealth.Current - 2f;
                             currentHealth.Current = 2f;
+                            ConsoleScreen.Log($"KEEP1HEALTH DAMAGE: {Convert.ToString(damage)}");
+                            ConsoleScreen.Log("");
+                            ConsoleScreen.Log($"BODYPART HIT: {bodyPart.ToString()}");
 
                             return false;
                         }
@@ -69,6 +121,5 @@ namespace Deminvincibility.Patches
 
             return true;
         }
-
     }
 }

@@ -26,10 +26,10 @@ namespace Deminvincibility
         {
             get; set;
         }
-        public string[] Keep1HealthSelectionList = new string[] { "All", "Head And Thorax" };
+        public string[] Keep1HealthSelectionList = new string[] { "All", "Head", "Thorax", "Head And Thorax" };
         private void Awake()
         {
-            checkSPTVersion();
+            // checkSPTVersion();
             Keep1Health = Config.Bind("1. Health", "Keep 1 Health", false,
                 new ConfigDescription("Enable to keep body parts from blacking",
                 null,
