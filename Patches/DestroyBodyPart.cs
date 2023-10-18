@@ -31,7 +31,29 @@ namespace Deminvincibility.Patches
 
                     if (DeminvicibilityPlugin.Keep1Health.Value)
                     {
-                        if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Head And Thorax")
+                        if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Head")
+                        {
+                            if (bodyPart == EBodyPart.Head)
+                            {
+                                return false;
+                            }
+                            else
+                            {
+                                return true;
+                            }
+                        }
+                        else if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Thorax")
+                        {
+                            if (bodyPart == EBodyPart.Chest)
+                            {
+                                return false;
+                            }
+                            else
+                            {
+                                return true;
+                            }
+                        }
+                        else if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Head And Thorax")
                         {
                             if (bodyPart == EBodyPart.Head || bodyPart == EBodyPart.Chest)
                             {
