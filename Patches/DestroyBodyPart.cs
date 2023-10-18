@@ -69,8 +69,6 @@ namespace Deminvincibility.Patches
                             return false;
                         }
                     }
-
-
                 }
             }
             catch (Exception e)

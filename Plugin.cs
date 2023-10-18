@@ -14,6 +14,7 @@ namespace Deminvincibility
     public class DeminvicibilityPlugin : BaseUnityPlugin
     {
         private static string credits = "Thanks Props <3 Ily https://github.com/dvize/DadGamerMode";
+
         public static ConfigEntry<Boolean> Keep1Health
         {
             get; set;
@@ -22,14 +23,28 @@ namespace Deminvincibility
         {
             get; set;
         }
+        public string[] Keep1HealthSelectionList = new string[] { "All", "Head", "Thorax", "Head And Thorax" };
         public static ConfigEntry<int> CustomDamageModeVal
         {
             get; set;
         }
-        public string[] Keep1HealthSelectionList = new string[] { "All", "Head", "Thorax", "Head And Thorax" };
+
+        public static ConfigEntry<Boolean> hpDeathBool
+        {
+            get; set;
+        }
+        public static ConfigEntry<string> hpDeath
+        {
+            get; set;
+        }
+
+        public string[] hpList = new string[] { "50 HP", "100 HP", "150 HP"};
+
         private void Awake()
         {
             // checkSPTVersion();
+
+            // - Keep1Health section
             Keep1Health = Config.Bind("1. Health", "Keep 1 Health", false,
                 new ConfigDescription("Enable to keep body parts from blacking",
                 null,
@@ -43,10 +58,25 @@ namespace Deminvincibility
             CustomDamageModeVal = Config.Bind("1. Health", "% Damage received", 100, new ConfigDescription("Set perceived damage in percent",
                 new AcceptableValueRange<int>(0, 100), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = true, Order = 3 }));
 
+            // Protection disable
+
+            hpDeathBool = Config.Bind("2. Death", "Enable hp-based protection?", false,
+                new ConfigDescription("If enabled, if your health goes below the certain value specified, protection will stop working.\n\nThis will disable \"Keep 1 Health\"",
+                null,
+                new ConfigurationManagerAttributes { IsAdvanced = false, Order = 4 }));
+
+            hpDeath = Config.Bind("2. Death", "Disable protection below:", "50 HP",
+                new ConfigDescription("",
+                new AcceptableValueList<string>(hpList),
+                new ConfigurationManagerAttributes { IsAdvanced = false, Order = 3 }));
+
+            // Patches
+
             new NewGamePatch().Enable();
             new Deminvincibility.Patches.ApplyDamage().Enable();
             new Deminvincibility.Patches.DestroyBodyPartPatch().Enable();
         }
+
         private void checkSPTVersion()
         {
             int currentVersion = FileVersionInfo.GetVersionInfo(BepInEx.Paths.ExecutablePath).FilePrivatePart;
