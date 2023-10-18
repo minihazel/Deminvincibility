@@ -25,35 +25,27 @@ namespace Deminvincibility.Patches
             {
                 if (__instance.Player != null && __instance.Player.IsYourPlayer)
                 {
-                    Logger.LogDebug(damage);
-                    ConsoleScreen.Log(" ============================= ");
-                    ConsoleScreen.Log(" ============================= ");
-                    ConsoleScreen.Log(" ============================= ");
-                    ConsoleScreen.Log($"INITIAL DAMAGE: {Convert.ToString(damage)}");
-                    ConsoleScreen.Log("");
-
                     healthController = __instance.Player.ActiveHealthController;
                     currentHealth = healthController.GetBodyPartHealth(bodyPart, false);
-                    ConsoleScreen.Log($"CURRENT HEALTH: {Convert.ToString(currentHealth.Current)}");
-                    ConsoleScreen.Log("");
 
                     if (DeminvicibilityPlugin.CustomDamageModeVal.Value != 100)
                     {
                         damage = damage * ((float)DeminvicibilityPlugin.CustomDamageModeVal.Value / 100);
                     }
 
-                    if (DeminvicibilityPlugin.Keep1Health.Value && ((currentHealth.Current - damage) <= 0))
+                    if (DeminvicibilityPlugin.Keep1Health.Value &&
+                        ((currentHealth.Current - damage) <= 0))
                     {
-                        float control = currentHealth.Current - damage;
-                        ConsoleScreen.Log(Convert.ToString(control));
-
                         if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Head")
                         {
                             if (bodyPart == EBodyPart.Head)
                             {
                                 damage = currentHealth.Current - 2f;
                                 currentHealth.Current = 2f;
-                                return false;
+                                if (damage < 0f)
+                                {
+                                    return false;
+                                }
                             }
                             else
                             {
@@ -71,7 +63,10 @@ namespace Deminvincibility.Patches
                             {
                                 damage = currentHealth.Current - 2f;
                                 currentHealth.Current = 2f;
-                                return false;
+                                if (damage < 0f)
+                                {
+                                    return false;
+                                }
                             }
                             else
                             {
@@ -89,7 +84,10 @@ namespace Deminvincibility.Patches
                             {
                                 damage = currentHealth.Current - 2f;
                                 currentHealth.Current = 2f;
-                                return false;
+                                if (damage < 0f)
+                                {
+                                    return false;
+                                }
                             }
                             else
                             {
@@ -105,11 +103,10 @@ namespace Deminvincibility.Patches
                         {
                             damage = currentHealth.Current - 2f;
                             currentHealth.Current = 2f;
-                            ConsoleScreen.Log($"KEEP1HEALTH DAMAGE: {Convert.ToString(damage)}");
-                            ConsoleScreen.Log("");
-                            ConsoleScreen.Log($"BODYPART HIT: {bodyPart.ToString()}");
-
-                            return false;
+                            if (damage < 0f)
+                            {
+                                return false;
+                            }
                         }
                     }
                 }
