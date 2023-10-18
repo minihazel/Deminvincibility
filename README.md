@@ -15,3 +15,9 @@ Currently, the following features are implemented:
 2. Open `Deminvincibility.zip` with 7-Zip
 3. Drag and drop the `BepInEx` folder straight into your SPT folder (where `Aki.Server.exe` is)
 4. Profit
+
+## Credits
+A huge thanks to the following people:
+- Props for developing DadGamerMode. Without him and his experience, this wouldn't have been possible!
+
+- [Dirtbikercj](https://hub.sp-tarkov.com/user/37201-dirtbikercj/) and [DrakiaXYZ](https://hub.sp-tarkov.com/user/30839-drakiaxyz/) from the [SPT Pub](https://discord.com/invite/Xn9msqQZan) for their troubleshooting and coding help. I owe everything to these people. <3
