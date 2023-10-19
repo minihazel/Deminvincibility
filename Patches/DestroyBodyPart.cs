@@ -4,6 +4,7 @@ using Aki.Reflection.Patching;
 using Deminvincibility;
 using EFT;
 using EFT.HealthSystem;
+using EFT.UI;
 using HarmonyLib;
 
 namespace Deminvincibility.Patches
@@ -14,6 +15,7 @@ namespace Deminvincibility.Patches
         private static DamageInfo tmpDmg;
         private static ActiveHealthController healthController;
         private static ValueStruct currentHealth;
+
         protected override MethodBase GetTargetMethod()
         {
             return AccessTools.Method(typeof(ActiveHealthController), "DestroyBodyPart");
@@ -29,38 +31,27 @@ namespace Deminvincibility.Patches
                     healthController = __instance.Player.ActiveHealthController;
                     currentHealth = healthController.GetBodyPartHealth(bodyPart, false);
 
-                    if (DeminvicibilityPlugin.Keep1Health.Value)
+                    if (DeminvicibilityPlugin.hpDeathBool.Value && !DeminvicibilityPlugin.Keep1Health.Value)
                     {
-                        if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Head")
-                        {
-                            if (bodyPart == EBodyPart.Head)
-                            {
-                                return false;
-                            }
-                            else
-                            {
-                                return true;
-                            }
-                        }
-                        else if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Thorax")
-                        {
-                            if (bodyPart == EBodyPart.Chest)
-                            {
-                                return false;
-                            }
-                            else
-                            {
-                                return true;
-                            }
-                        }
-                        else if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Head And Thorax")
+                        return false;
+                    }
+                    else if (DeminvicibilityPlugin.Keep1Health.Value && !DeminvicibilityPlugin.hpDeathBool.Value)
+                    {
+                        if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Head And Thorax")
                         {
                             if (bodyPart == EBodyPart.Head || bodyPart == EBodyPart.Chest)
                             {
+                                ConsoleScreen.Log("Player shouldn\'t black out here");
+                                Logger.LogMessage("Player shouldn't black out here");
                                 return false;
                             }
                             else
                             {
+                                ConsoleScreen.Log("Player blacked out here");
+                                Logger.LogMessage("Player blacked out here");
+                                Logger.LogMessage(" ===================================== ");
+                                Logger.LogMessage(" ===================================== ");
+                                Logger.LogMessage(" ===================================== ");
                                 return true;
                             }
                         }
@@ -75,7 +66,6 @@ namespace Deminvincibility.Patches
             {
                 Logger.LogError(e);
             }
-
             return true;
         }
 
