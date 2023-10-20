@@ -49,31 +49,31 @@ namespace Deminvincibility
             if (placeholder)
             {
                 Keep1Health = Config.Bind("1. Health", "Keep 1 Health", false,
-                    new ConfigDescription("Enable to keep body parts from blacking",
+                    new ConfigDescription("Enable to keep yourself from dying",
                     null,
                     new ConfigurationManagerAttributes { IsAdvanced = false, Order = 6 }));
 
-                Keep1HealthSelection = Config.Bind("1. Health", "Keep 1 Health Selection", "All",
-                    new ConfigDescription("Select which body parts to keep above 1 health",
-                    new AcceptableValueList<string>(Keep1HealthSelectionList),
-                    new ConfigurationManagerAttributes { IsAdvanced = false, Order = 5 }));
+                // Keep1HealthSelection = Config.Bind("1. Health", "Keep 1 Health Selection", "All",
+                //     new ConfigDescription("Select which body parts to keep above 1 health",
+                // new AcceptableValueList<string>(Keep1HealthSelectionList),
+                // new ConfigurationManagerAttributes { IsAdvanced = false, Order = 5 }));
 
-                CustomDamageModeVal = Config.Bind("1. Health", "% Damage received", 100, new ConfigDescription("Set perceived damage in percent",
-                    new AcceptableValueRange<int>(1, 100), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = true, Order = 3 }));
+                // CustomDamageModeVal = Config.Bind("1. Health", "% Damage received", 100, new ConfigDescription("Set perceived damage in percent",
+                // new AcceptableValueRange<int>(1, 100), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = true, Order = 3 }));
             }
 
             // Protection disable
             if (placeholder)
             {
-                hpDeathBool = Config.Bind("2. Death", "Enable hp-based protection?", false,
-                    new ConfigDescription("If enabled, if your health goes below the certain value specified, protection will stop working.\n\nThis will disable \"Keep 1 Health\"",
-                    null,
-                    new ConfigurationManagerAttributes { IsAdvanced = false, Order = 4 }));
+                // hpDeathBool = Config.Bind("2. Death", "Enable hp-based protection?", false,
+                // new ConfigDescription("If enabled, if your health goes below the certain value specified, protection will stop working.\n\nThis will disable \"Keep 1 Health\"",
+                // null,
+                // new ConfigurationManagerAttributes { IsAdvanced = false, Order = 4 }));
 
-                hpDeath = Config.Bind("2. Death", "Disable protection below:", "15 HP",
-                    new ConfigDescription("",
-                    new AcceptableValueList<string>(hpList),
-                    new ConfigurationManagerAttributes { IsAdvanced = false, Order = 3 }));
+                // hpDeath = Config.Bind("2. Death", "Disable protection below:", "15 HP",
+                // new ConfigDescription("",
+                // new AcceptableValueList<string>(hpList),
+                // new ConfigurationManagerAttributes { IsAdvanced = false, Order = 3 }));
             }
 
             // Patches
@@ -81,7 +81,7 @@ namespace Deminvincibility
             // new Deminvincibility.Patches.ApplyDamage().Enable();
             // new Deminvincibility.Patches.ChangeHealth().Enable();
             new Deminvincibility.Patches.Kill().Enable();
-            new Deminvincibility.Patches.DestroyBodyPartPatch().Enable();
+            // new Deminvincibility.Patches.DestroyBodyPartPatch().Enable();
         }
 
         private void checkSPTVersion()
