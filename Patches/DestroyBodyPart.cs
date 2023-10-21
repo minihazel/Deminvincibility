@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
 using Aki.Reflection.Patching;
 using Deminvincibility;
 using EFT;
@@ -31,6 +32,8 @@ namespace Deminvincibility.Patches
                     healthController = __instance.Player.ActiveHealthController;
                     currentHealth = healthController.GetBodyPartHealth(bodyPart, false);
 
+                    return false;
+                    /*
                     if (DeminvicibilityPlugin.hpDeathBool.Value && !DeminvicibilityPlugin.Keep1Health.Value)
                     {
                         return false;
@@ -60,6 +63,7 @@ namespace Deminvincibility.Patches
                             return false;
                         }
                     }
+                    */
                 }
             }
             catch (Exception e)

@@ -1,6 +1,7 @@
 ﻿using Aki.Reflection.Patching;
 using BepInEx;
 using BepInEx.Configuration;
+using Deminvincibility.Patches;
 using EFT;
 using System;
 using System.Diagnostics;
@@ -25,6 +26,10 @@ namespace Deminvincibility
             get; set;
         }
         public string[] Keep1HealthSelectionList = new string[] { "All", "Head And Thorax" };
+        public static ConfigEntry<Boolean> medicineBool
+        {
+            get; set;
+        }
         public static ConfigEntry<int> CustomDamageModeVal
         {
             get; set;
@@ -53,35 +58,42 @@ namespace Deminvincibility
                     null,
                     new ConfigurationManagerAttributes { IsAdvanced = false, Order = 6 }));
 
-                // Keep1HealthSelection = Config.Bind("1. Health", "Keep 1 Health Selection", "All",
-                //     new ConfigDescription("Select which body parts to keep above 1 health",
-                // new AcceptableValueList<string>(Keep1HealthSelectionList),
-                // new ConfigurationManagerAttributes { IsAdvanced = false, Order = 5 }));
+                Keep1HealthSelection = Config.Bind("1. Health", "Keep 1 Health Selection", "All",
+                    new ConfigDescription("Select which body parts to keep above 1 health",
+                new AcceptableValueList<string>(Keep1HealthSelectionList),
+                new ConfigurationManagerAttributes { IsAdvanced = false, Order = 5 }));
 
-                // CustomDamageModeVal = Config.Bind("1. Health", "% Damage received", 100, new ConfigDescription("Set perceived damage in percent",
-                // new AcceptableValueRange<int>(1, 100), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = true, Order = 3 }));
+                medicineBool = Config.Bind("1. Health", "Ignore health side effects?", false,
+                    new ConfigDescription("If enabled, fractures, bleeds and other forms of side effects to your health will be disabled.\n\nThis requires \"Keep 1 Health\" on in order to work.",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdvanced = false, Order = 4 }));
+
+                CustomDamageModeVal = Config.Bind("1. Health", "% Damage received", 100, new ConfigDescription("Set perceived damage in percent",
+                new AcceptableValueRange<int>(1, 100), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = true, Order = 3 }));
             }
 
             // Protection disable
             if (placeholder)
             {
-                // hpDeathBool = Config.Bind("2. Death", "Enable hp-based protection?", false,
-                // new ConfigDescription("If enabled, if your health goes below the certain value specified, protection will stop working.\n\nThis will disable \"Keep 1 Health\"",
-                // null,
-                // new ConfigurationManagerAttributes { IsAdvanced = false, Order = 4 }));
+                hpDeathBool = Config.Bind("2. Death", "Enable hp-based protection?", false,
+                new ConfigDescription("If enabled, if your health goes below the certain value specified, protection will stop working.\n\nThis will disable \"Keep 1 Health\"",
+                null,
+                new ConfigurationManagerAttributes { IsAdvanced = false, Order = 2 }));
 
-                // hpDeath = Config.Bind("2. Death", "Disable protection below:", "15 HP",
-                // new ConfigDescription("",
-                // new AcceptableValueList<string>(hpList),
-                // new ConfigurationManagerAttributes { IsAdvanced = false, Order = 3 }));
+                hpDeath = Config.Bind("2. Death", "Disable protection below:", "15 HP",
+                new ConfigDescription("",
+                new AcceptableValueList<string>(hpList),
+                new ConfigurationManagerAttributes { IsAdvanced = false, Order = 1 }));
             }
 
             // Patches
             new NewGamePatch().Enable();
-            // new Deminvincibility.Patches.ApplyDamage().Enable();
             // new Deminvincibility.Patches.ChangeHealth().Enable();
+            new Deminvincibility.Patches.DestroyBodyPartPatch().Enable();
+            new Deminvincibility.Patches.ApplyDamage().Enable();
             new Deminvincibility.Patches.Kill().Enable();
-            // new Deminvincibility.Patches.DestroyBodyPartPatch().Enable();
+            // new Deminvincibility.Patches.DoBleed().Enable();
+            new Deminvincibility.Patches.DoFracture().Enable();
         }
 
         private void checkSPTVersion()

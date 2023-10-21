@@ -48,12 +48,24 @@ namespace Deminvincibility.Patches
                     }
                     else if (DeminvicibilityPlugin.Keep1Health.Value && !DeminvicibilityPlugin.hpDeathBool.Value && ((healthSubtractedByDamage) <= 0))
                     {
-                        if (currentHealth.AtMinimum)
+                        if (damage > currentHealth.Current)
                         {
-                            // Logger.LogDebug("Destroyed body part: " + bodyPart.ToString());
-                            healthController.DestroyBodyPart(bodyPart, EDamageType.Bullet);
-                            return false;
+                            damage = currentHealth.Current - 1f;
+                            if (DeminvicibilityPlugin.medicineBool.Value)
+                                healthController.RemoveNegativeEffects(bodyPart);
+
+                            return true;
                         }
+
+                        /*
+                        if (currentHealth.Current < 2f)
+                        {
+                           damage = currentHealth.Current - 2f;
+                           healthController.ChangeHealth(bodyPart, 2f, damageInfo);
+
+                           return false;
+                        }
+                        */
                     }
                 }
             }
