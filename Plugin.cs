@@ -39,10 +39,12 @@ namespace Deminvincibility
         {
             get; set;
         }
+        /*
         public static ConfigEntry<string> hpDeath
         {
             get; set;
         }
+        */
 
         public string[] hpList = new string[] { "15", "50 HP", "100 HP", "150 HP"};
 
@@ -64,7 +66,7 @@ namespace Deminvincibility
                 new ConfigurationManagerAttributes { IsAdvanced = false, Order = 5 }));
 
                 medicineBool = Config.Bind("1. Health", "Ignore health side effects?", false,
-                    new ConfigDescription("If enabled, fractures, bleeds and other forms of side effects to your health will be disabled.\n\nThis requires \"Keep 1 Health\" on in order to work.",
+                    new ConfigDescription("If enabled, fractures, bleeds and other forms of side effects to your health will be auto-healed.\n\nThis requires \"Keep 1 Health\" on in order to work.",
                     null,
                     new ConfigurationManagerAttributes { IsAdvanced = false, Order = 4 }));
 
@@ -75,15 +77,15 @@ namespace Deminvincibility
             // Protection disable
             if (placeholder)
             {
-                hpDeathBool = Config.Bind("2. Death", "Enable hp-based protection?", false,
-                new ConfigDescription("If enabled, if your health goes below the certain value specified, protection will stop working.\n\nThis will disable \"Keep 1 Health\"",
+                hpDeathBool = Config.Bind("2. Death", "Enable second chance protection?", false,
+                new ConfigDescription("If enabled, if you take a hit that would normally kill you, you\'ll be given a second chance to survive.",
                 null,
                 new ConfigurationManagerAttributes { IsAdvanced = false, Order = 2 }));
 
-                hpDeath = Config.Bind("2. Death", "Disable protection below:", "15 HP",
-                new ConfigDescription("",
-                new AcceptableValueList<string>(hpList),
-                new ConfigurationManagerAttributes { IsAdvanced = false, Order = 1 }));
+                // hpDeath = Config.Bind("2. Death", "Disable protection below:", "15 HP",
+                // new ConfigDescription("",
+                // new AcceptableValueList<string>(hpList),
+                // new ConfigurationManagerAttributes { IsAdvanced = false, Order = 1 }));
             }
 
             // Patches

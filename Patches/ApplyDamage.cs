@@ -29,8 +29,6 @@ namespace Deminvincibility.Patches
             {
                 if (__instance.Player != null && __instance.Player.IsYourPlayer)
                 {
-                    string convertedHP = DeminvicibilityPlugin.hpDeath.Value.Replace(" HP", "");
-
                     healthController = __instance.Player.ActiveHealthController;
                     currentHealth = healthController.GetBodyPartHealth(bodyPart, false);
                     float healthSubtractedByDamage = currentHealth.Current - damage;
@@ -40,17 +38,22 @@ namespace Deminvincibility.Patches
                         damage = damage * ((float)DeminvicibilityPlugin.CustomDamageModeVal.Value / 100);
                     }
 
-                    if (DeminvicibilityPlugin.hpDeathBool.Value)
-                    {
-                        int damageInt = (int)damage;
-                        int intHP = int.Parse(convertedHP);
-                        float floatHP = float.Parse(convertedHP, CultureInfo.InvariantCulture.NumberFormat);
-                    }
-                    else if (DeminvicibilityPlugin.Keep1Health.Value && !DeminvicibilityPlugin.hpDeathBool.Value && ((healthSubtractedByDamage) <= 0))
+                    if (DeminvicibilityPlugin.Keep1Health.Value && !DeminvicibilityPlugin.hpDeathBool.Value && ((healthSubtractedByDamage) <= 0))
                     {
                         if (damage > currentHealth.Current)
                         {
-                            damage = currentHealth.Current - 1f;
+                            if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "All")
+                            {
+                                damage = currentHealth.Current - 1f;
+                            }
+                            else if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Head & Thorax")
+                            {
+                                if (bodyPart == EBodyPart.Head || bodyPart == EBodyPart.Chest)
+                                {
+                                    damage = currentHealth.Current - 1f;
+                                }
+                            }
+
                             if (DeminvicibilityPlugin.medicineBool.Value)
                             {
                                 healthController.RemoveNegativeEffects(bodyPart);
