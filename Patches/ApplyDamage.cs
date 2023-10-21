@@ -52,7 +52,9 @@ namespace Deminvincibility.Patches
                         {
                             damage = currentHealth.Current - 1f;
                             if (DeminvicibilityPlugin.medicineBool.Value)
+                            {
                                 healthController.RemoveNegativeEffects(bodyPart);
+                            }
 
                             return true;
                         }
