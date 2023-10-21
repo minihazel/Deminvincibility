@@ -25,7 +25,7 @@ namespace Deminvincibility
         {
             get; set;
         }
-        public string[] Keep1HealthSelectionList = new string[] { "All", "Head And Thorax" };
+        public string[] Keep1HealthSelectionList = new string[] { "All", "Head & Thorax" };
         public static ConfigEntry<Boolean> medicineBool
         {
             get; set;
@@ -45,7 +45,6 @@ namespace Deminvincibility
             get; set;
         }
         */
-
         public string[] hpList = new string[] { "15", "50 HP", "100 HP", "150 HP"};
 
         private void Awake()
@@ -90,12 +89,10 @@ namespace Deminvincibility
 
             // Patches
             new NewGamePatch().Enable();
-            // new Deminvincibility.Patches.ChangeHealth().Enable();
             new Deminvincibility.Patches.DestroyBodyPartPatch().Enable();
             new Deminvincibility.Patches.ApplyDamage().Enable();
-            new Deminvincibility.Patches.Kill().Enable();
-            // new Deminvincibility.Patches.DoBleed().Enable();
             new Deminvincibility.Patches.DoFracture().Enable();
+            new Deminvincibility.Patches.Kill().Enable();
         }
 
         private void checkSPTVersion()
