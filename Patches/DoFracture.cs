@@ -28,7 +28,9 @@ namespace Deminvincibility.Patches
                 if (__instance.Player != null && __instance.Player.IsYourPlayer)
                 {
                     if (DeminvicibilityPlugin.medicineBool.Value && DeminvicibilityPlugin.Keep1Health.Value)
+                    {
                         return false;
+                    }
                     else if (!DeminvicibilityPlugin.medicineBool.Value)
                     {
                         if (bodyPart == EBodyPart.Head || bodyPart == EBodyPart.Chest)
