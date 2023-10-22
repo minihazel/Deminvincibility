@@ -33,49 +33,56 @@ namespace Deminvincibility.Patches
         [PatchPrefix]
         public static bool Prefix(ActiveHealthController __instance, EDamageType damageType)
         {
-            if (__instance.Player != null && __instance.Player.IsYourPlayer)
+            try
             {
-                hc = __instance.Player.ActiveHealthController;
-                currentHeadHealth = hc.GetBodyPartHealth(EBodyPart.Head, false);
-                currentChestHealth = hc.GetBodyPartHealth(EBodyPart.Chest, false);
-                currentStomachHealth = hc.GetBodyPartHealth(EBodyPart.Stomach, false);
-                currentLeftArmHealth = hc.GetBodyPartHealth(EBodyPart.LeftArm, false);
-                currentRightArmHealth = hc.GetBodyPartHealth(EBodyPart.RightArm, false);
-                currentLeftLegHealth = hc.GetBodyPartHealth(EBodyPart.LeftLeg, false);
-                currentRightLegHealth = hc.GetBodyPartHealth(EBodyPart.RightLeg, false);
-
-                float totalHealth =
-                    currentHeadHealth.Current +
-                    currentChestHealth.Current +
-                    currentStomachHealth.Current +
-                    currentLeftArmHealth.Current +
-                    currentRightArmHealth.Current +
-                    currentLeftLegHealth.Current +
-                    currentRightLegHealth.Current;
-
-                if (DeminvicibilityPlugin.Keep1Health.Value)
+                if (__instance.Player != null && __instance.Player.IsYourPlayer)
                 {
-                    return false;
-                }
-                else if (DeminvicibilityPlugin.hpDeathBool.Value && !DeminvicibilityPlugin.Keep1Health.Value)
-                {
-                    if (hasSecondChance)
+                    hc = __instance.Player.ActiveHealthController;
+                    currentHeadHealth = hc.GetBodyPartHealth(EBodyPart.Head, false);
+                    currentChestHealth = hc.GetBodyPartHealth(EBodyPart.Chest, false);
+                    currentStomachHealth = hc.GetBodyPartHealth(EBodyPart.Stomach, false);
+                    currentLeftArmHealth = hc.GetBodyPartHealth(EBodyPart.LeftArm, false);
+                    currentRightArmHealth = hc.GetBodyPartHealth(EBodyPart.RightArm, false);
+                    currentLeftLegHealth = hc.GetBodyPartHealth(EBodyPart.LeftLeg, false);
+                    currentRightLegHealth = hc.GetBodyPartHealth(EBodyPart.RightLeg, false);
+
+                    float totalHealth =
+                        currentHeadHealth.Current +
+                        currentChestHealth.Current +
+                        currentStomachHealth.Current +
+                        currentLeftArmHealth.Current +
+                        currentRightArmHealth.Current +
+                        currentLeftLegHealth.Current +
+                        currentRightLegHealth.Current;
+
+                    if (DeminvicibilityPlugin.Keep1Health.Value)
                     {
-                        if (damageType == EDamageType.Bullet ||
-                            damageType == EDamageType.Explosion)
-                        {
-                            ConsoleScreen.Log("SECOND CHANCE PROTECTION SAVED YOU, GOOD LUCK!");
-                            Logger.LogMessage("SECOND CHANCE PROTECTION SAVED YOU, GOOD LUCK!");
-                            hasSecondChance = false;
-                        }
-
                         return false;
                     }
-                    else
+                    else if (DeminvicibilityPlugin.hpDeathBool.Value && !DeminvicibilityPlugin.Keep1Health.Value)
                     {
-                        return true;
+                        if (hasSecondChance)
+                        {
+                            if (damageType == EDamageType.Bullet ||
+                                damageType == EDamageType.Explosion)
+                            {
+                                ConsoleScreen.Log("SECOND CHANCE PROTECTION SAVED YOU, GOOD LUCK!");
+                                Logger.LogMessage("SECOND CHANCE PROTECTION SAVED YOU, GOOD LUCK!");
+                                hasSecondChance = false;
+                            }
+
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                Logger.LogError(e);
             }
             return true;
         }
