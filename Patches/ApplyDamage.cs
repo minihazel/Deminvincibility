@@ -33,6 +33,24 @@ namespace Deminvincibility.Patches
                     currentHealth = healthController.GetBodyPartHealth(bodyPart, false);
                     float healthSubtractedByDamage = currentHealth.Current - damage;
 
+                    if (DeminvicibilityPlugin.medicineBool.Value)
+                    {
+                        EBodyPart[] bPs = {
+                            EBodyPart.Head,
+                            EBodyPart.Chest,
+                            EBodyPart.Stomach,
+                            EBodyPart.LeftArm,
+                            EBodyPart.RightArm,
+                            EBodyPart.LeftLeg,
+                            EBodyPart.RightLeg
+                        };
+
+                        for (int i = 0; i < bPs.Length; i++)
+                        {
+                            healthController.RemoveNegativeEffects(bPs[i]);
+                        }
+                    }
+
                     if (DeminvicibilityPlugin.CustomDamageModeVal.Value != 100)
                     {
                         damage = damage * ((float)DeminvicibilityPlugin.CustomDamageModeVal.Value / 100);
@@ -42,35 +60,27 @@ namespace Deminvincibility.Patches
                     {
                         if (damage > currentHealth.Current)
                         {
-                            if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "All")
+                            if (!DeminvicibilityPlugin.allowBlackedLimbs.Value)
                             {
                                 damage = currentHealth.Current - 1f;
                             }
-                            else if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Head & Thorax")
+                            else
                             {
                                 if (bodyPart == EBodyPart.Head || bodyPart == EBodyPart.Chest)
                                 {
                                     damage = currentHealth.Current - 1f;
                                 }
-                            }
-
-                            if (DeminvicibilityPlugin.medicineBool.Value)
-                            {
-                                healthController.RemoveNegativeEffects(bodyPart);
+                                else
+                                {
+                                    if (DeminvicibilityPlugin.allowBlacking.Value && currentHealth.Current <= 0f)
+                                    {
+                                        healthController.DestroyBodyPart(bodyPart, damageInfo.DamageType);
+                                    }
+                                }
                             }
 
                             return true;
                         }
-
-                        /*
-                        if (currentHealth.Current < 2f)
-                        {
-                           damage = currentHealth.Current - 2f;
-                           healthController.ChangeHealth(bodyPart, 2f, damageInfo);
-
-                           return false;
-                        }
-                        */
                     }
                 }
             }

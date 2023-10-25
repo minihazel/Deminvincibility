@@ -21,11 +21,21 @@ namespace Deminvincibility
         {
             get; set;
         }
+        public static ConfigEntry<Boolean> allowBlackedLimbs
+        {
+            get; set;
+        }
+        public static ConfigEntry<Boolean> allowBlacking
+        {
+            get; set;
+        }
+        /*
         public static ConfigEntry<string> Keep1HealthSelection
         {
             get; set;
         }
         public string[] Keep1HealthSelectionList = new string[] { "All", "Head & Thorax" };
+        */
         public static ConfigEntry<Boolean> medicineBool
         {
             get; set;
@@ -54,18 +64,30 @@ namespace Deminvincibility
             // - Keep1Health section
             if (placeholder)
             {
-                Keep1Health = Config.Bind("1. Health", "Keep 1 Health", false,
+                Keep1Health = Config.Bind("1. Health", "1 HP Mode", false,
                     new ConfigDescription("Enable to keep yourself from dying",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdvanced = false, Order = 7 }));
+
+                allowBlackedLimbs = Config.Bind("1. Health", "Allow 0hp on limbs", false,
+                    new ConfigDescription("If enabled, Keep 1 Health on will allow arms and legs to hit 0 hp.",
                     null,
                     new ConfigurationManagerAttributes { IsAdvanced = false, Order = 6 }));
 
+                allowBlacking = Config.Bind("1. Health", "Allow blacking of limbs", false,
+                    new ConfigDescription("If enabled, Keep 1 Health on will cause blacking of limbs when they reach 0hp.",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdvanced = false, Order = 5 }));
+
+                /*
                 Keep1HealthSelection = Config.Bind("1. Health", "Keep 1 Health Selection", "All",
                     new ConfigDescription("Select which body parts to keep above 1 health",
                 new AcceptableValueList<string>(Keep1HealthSelectionList),
                 new ConfigurationManagerAttributes { IsAdvanced = false, Order = 5 }));
+                */
 
                 medicineBool = Config.Bind("1. Health", "Ignore health side effects?", false,
-                    new ConfigDescription("If enabled, fractures, bleeds and other forms of side effects to your health will be auto-healed.\n\nThis requires \"Keep 1 Health\" on in order to work.",
+                    new ConfigDescription("If enabled, fractures, bleeds and other forms of side effects to your health will be auto-healed.\n\nPSA: Disabling this could cause unintended side effects, use caution.",
                     null,
                     new ConfigurationManagerAttributes { IsAdvanced = false, Order = 4 }));
 
