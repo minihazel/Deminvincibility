@@ -1,6 +1,4 @@
 # Deminvincibility
-Fork of hazelify's Deminvincibility ([link](https://github.com/minihazel/Deminvincibility))
-
 A stripped out version of the "Keep 1 Health" section of [Props](https://hub.sp-tarkov.com/user/18746-props/)' [DadGamerMode](https://hub.sp-tarkov.com/files/file/926-dad-gamer-mode) ([click here for repo](https://github.com/dvize/DadGamerMode)).
 
 With explicit permission from Props, this is being released as a standalone BepInEx mod based off of his as a learning experience for me to dive into BepInEx modding.

@@ -1,26 +1,17 @@
 ﻿using System;
-using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 using Aki.Reflection.Patching;
-using Deminvincibility;
-using EFT;
 using EFT.HealthSystem;
 using EFT.UI;
 using HarmonyLib;
-using UnityEngine;
 
 namespace Deminvincibility.Patches
 {
     internal class ChangeHealth : ModulePatch
     {
-        private static ActiveHealthController healthController;
-        private static ValueStruct currentHealth;
-
         protected override MethodBase GetTargetMethod()
         {
-            return AccessTools.Method(typeof(ActiveHealthController), "ChangeHealth");
+            return AccessTools.Method(typeof(ActiveHealthController), nameof(ActiveHealthController.ChangeHealth));
         }
 
         [PatchPrefix]
@@ -28,32 +19,37 @@ namespace Deminvincibility.Patches
         {
             try
             {
-                if (__instance.Player != null && __instance.Player.IsYourPlayer)
+                // Target is not our player - don't do anything
+                if (__instance.Player == null || !__instance.Player.IsYourPlayer)
                 {
-                    healthController = __instance.Player.ActiveHealthController;
-                    currentHealth = healthController.GetBodyPartHealth(bodyPart, false);
+                    return true;
+                }
 
-                    ConsoleScreen.Log("CHANGEHEALTH");
-                    Logger.LogMessage("CHANGEHEALTH");
+                var healthController = __instance.Player.ActiveHealthController;
+                var currentHealth = healthController.GetBodyPartHealth(bodyPart, false);
 
-                    if (DeminvicibilityPlugin.Keep1Health.Value)
+                ConsoleScreen.Log("CHANGEHEALTH");
+                Logger.LogMessage("CHANGEHEALTH");
+
+                if (DeminvicibilityPlugin.Keep1Health.Value)
+                {
+                    if (currentHealth.Current == 1f)
                     {
-                        if (currentHealth.Current == 1f)
-                        {
-                            ConsoleScreen.Log("SET HEALTH");
-                            Logger.LogMessage("SET HEALTH");
+                        ConsoleScreen.Log("SET HEALTH");
+                        Logger.LogMessage("SET HEALTH");
 
-                            value = currentHealth.Current + 1f;
-                            currentHealth.Current = 1f;
-                            return false;
-                        }
+                        value = currentHealth.Current + 1f;
+                        currentHealth.Current = 1f;
+                        return false;
                     }
                 }
+                
             }
             catch (Exception e)
             {
                 Logger.LogError(e);
             }
+
             return true;
         }
     }

@@ -1,25 +1,20 @@
 ﻿using System;
 using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 using Aki.Reflection.Patching;
-using Deminvincibility;
 using EFT;
 using EFT.HealthSystem;
-using EFT.UI;
 using HarmonyLib;
 
 namespace Deminvincibility.Patches
 {
     internal class DestroyBodyPartPatch : ModulePatch
     {
-        private static readonly EBodyPart[] critBodyParts = { EBodyPart.Stomach, EBodyPart.Head, EBodyPart.Chest };
-        private static DamageInfo tmpDmg;
-        private static ActiveHealthController healthController;
-        private static ValueStruct currentHealth;
+        // private static readonly EBodyPart[] critBodyParts = { EBodyPart.Stomach, EBodyPart.Head, EBodyPart.Chest };
+        // private static DamageInfo tmpDmg;
 
         protected override MethodBase GetTargetMethod()
         {
-            return AccessTools.Method(typeof(ActiveHealthController), "DestroyBodyPart");
+            return AccessTools.Method(typeof(ActiveHealthController), nameof(ActiveHealthController.DestroyBodyPart));
         }
 
         [PatchPrefix]
@@ -27,49 +22,61 @@ namespace Deminvincibility.Patches
         {
             try
             {
-                if (__instance.Player != null && __instance.Player.IsYourPlayer)
+                // Target is not our player - don't do anything
+                if (__instance.Player == null || !__instance.Player.IsYourPlayer)
                 {
-                    healthController = __instance.Player.ActiveHealthController;
-                    currentHealth = healthController.GetBodyPartHealth(bodyPart, false);
-
-                    return false;
-                    /*
-                    if (DeminvicibilityPlugin.hpDeathBool.Value && !DeminvicibilityPlugin.Keep1Health.Value)
-                    {
-                        return false;
-                    }
-                    else if (DeminvicibilityPlugin.Keep1Health.Value && !DeminvicibilityPlugin.hpDeathBool.Value)
-                    {
-                        if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Head And Thorax")
-                        {
-                            if (bodyPart == EBodyPart.Head || bodyPart == EBodyPart.Chest)
-                            {
-                                ConsoleScreen.Log("Player shouldn\'t black out here");
-                                Logger.LogMessage("Player shouldn't black out here");
-                                return false;
-                            }
-                            else
-                            {
-                                ConsoleScreen.Log("Player blacked out here");
-                                Logger.LogMessage("Player blacked out here");
-                                Logger.LogMessage(" ===================================== ");
-                                Logger.LogMessage(" ===================================== ");
-                                Logger.LogMessage(" ===================================== ");
-                                return true;
-                            }
-                        }
-                        else if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "All")
-                        {
-                            return false;
-                        }
-                    }
-                    */
+                    return true;
                 }
+
+                // If Keep1Health is disabled, don't do anything
+                if (!DeminvicibilityPlugin.Keep1Health.Value)
+                {
+                    return true;
+                }
+
+                // The method to destroy body parts will be allowed to run depending on the value of AllowBlacking
+                // If the setting is enabled, then the method will run as usual. If the setting is disabled, then the method will be skipped
+                return DeminvicibilityPlugin.AllowBlacking.Value;
+
+                // var healthController = __instance.Player.ActiveHealthController;
+                // var currentHealth = healthController.GetBodyPartHealth(bodyPart, false);
+
+                // if (DeminvicibilityPlugin.SecondChanceProtection.Value && !DeminvicibilityPlugin.Keep1Health.Value)
+                // {
+                //     return false;
+                // }
+                // else if (DeminvicibilityPlugin.Keep1Health.Value && !DeminvicibilityPlugin.SecondChanceProtection.Value)
+                // {
+                //     if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "Head And Thorax")
+                //     {
+                //         if (bodyPart == EBodyPart.Head || bodyPart == EBodyPart.Chest)
+                //         {
+                //             ConsoleScreen.Log("Player shouldn\'t black out here");
+                //             Logger.LogMessage("Player shouldn't black out here");
+                //             return false;
+                //         }
+                //         else
+                //         {
+                //             ConsoleScreen.Log("Player blacked out here");
+                //             Logger.LogMessage("Player blacked out here");
+                //             Logger.LogMessage(" ===================================== ");
+                //             Logger.LogMessage(" ===================================== ");
+                //             Logger.LogMessage(" ===================================== ");
+                //             return true;
+                //         }
+                //     }
+                //     else if (DeminvicibilityPlugin.Keep1HealthSelection.Value == "All")
+                //     {
+                //         return false;
+                //     }
+                // }
+
             }
             catch (Exception e)
             {
                 Logger.LogError(e);
             }
+
             return true;
         }
 

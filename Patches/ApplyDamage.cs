@@ -1,25 +1,16 @@
 ﻿using System;
-using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.Remoting.Messaging;
 using Aki.Reflection.Patching;
-using Deminvincibility;
-using EFT;
 using EFT.HealthSystem;
-using EFT.UI;
 using HarmonyLib;
 
 namespace Deminvincibility.Patches
 {
     internal class ApplyDamage : ModulePatch
     {
-        private static ActiveHealthController healthController;
-        private static ValueStruct currentHealth;
-
         protected override MethodBase GetTargetMethod()
         {
-            return AccessTools.Method(typeof(ActiveHealthController), "ApplyDamage");
+            return AccessTools.Method(typeof(ActiveHealthController), nameof(ActiveHealthController.ApplyDamage));
         }
 
         [PatchPrefix]
@@ -27,60 +18,49 @@ namespace Deminvincibility.Patches
         {
             try
             {
-                if (__instance.Player != null && __instance.Player.IsYourPlayer)
+                // Target is not our player - don't do anything
+                if (__instance.Player == null || !__instance.Player.IsYourPlayer)
                 {
-                    healthController = __instance.Player.ActiveHealthController;
-                    currentHealth = healthController.GetBodyPartHealth(bodyPart, false);
-                    float healthSubtractedByDamage = currentHealth.Current - damage;
+                    return true;
+                }
 
-                    if (DeminvicibilityPlugin.medicineBool.Value)
+                var healthController = __instance.Player.ActiveHealthController;
+                var currentHealth = healthController.GetBodyPartHealth(bodyPart, false);
+
+                // Scale damage based on our set damage %
+                if (DeminvicibilityPlugin.CustomDamageModeVal.Value != 100)
+                {
+                    damage *= (float)DeminvicibilityPlugin.CustomDamageModeVal.Value / 100;
+                }
+
+                // Remove negative health effects
+                if (DeminvicibilityPlugin.MedicineBool.Value)
+                {
+                    EBodyPart[] bParts =
                     {
-                        EBodyPart[] bPs = {
-                            EBodyPart.Head,
-                            EBodyPart.Chest,
-                            EBodyPart.Stomach,
-                            EBodyPart.LeftArm,
-                            EBodyPart.RightArm,
-                            EBodyPart.LeftLeg,
-                            EBodyPart.RightLeg
-                        };
+                        EBodyPart.Head,
+                        EBodyPart.Chest,
+                        EBodyPart.Stomach,
+                        EBodyPart.LeftArm,
+                        EBodyPart.RightArm,
+                        EBodyPart.LeftLeg,
+                        EBodyPart.RightLeg
+                    };
 
-                        for (int i = 0; i < bPs.Length; i++)
-                        {
-                            healthController.RemoveNegativeEffects(bPs[i]);
-                        }
+                    foreach (var bPart in bParts)
+                    {
+                        healthController.RemoveNegativeEffects(bPart);
                     }
+                }
 
-                    if (DeminvicibilityPlugin.CustomDamageModeVal.Value != 100)
+                var healthSubtractedByDamage = currentHealth.Current - damage;
+                if (DeminvicibilityPlugin.Keep1Health.Value && healthSubtractedByDamage < 1f)
+                {
+                    // Head and Chest will never be allowed below 1HP if Keep1Health is enabled
+                    // Other limbs will also be protected if Allow0HpLimbs is disabled
+                    if (bodyPart == EBodyPart.Head || bodyPart == EBodyPart.Chest || !DeminvicibilityPlugin.Allow0HpLimbs.Value)
                     {
-                        damage = damage * ((float)DeminvicibilityPlugin.CustomDamageModeVal.Value / 100);
-                    }
-
-                    if (DeminvicibilityPlugin.Keep1Health.Value && !DeminvicibilityPlugin.hpDeathBool.Value && ((healthSubtractedByDamage) <= 0))
-                    {
-                        if (damage > currentHealth.Current)
-                        {
-                            if (!DeminvicibilityPlugin.allowBlackedLimbs.Value)
-                            {
-                                damage = currentHealth.Current - 1f;
-                            }
-                            else
-                            {
-                                if (bodyPart == EBodyPart.Head || bodyPart == EBodyPart.Chest)
-                                {
-                                    damage = currentHealth.Current - 1f;
-                                }
-                                else
-                                {
-                                    if (DeminvicibilityPlugin.allowBlacking.Value && currentHealth.Current <= 0f)
-                                    {
-                                        healthController.DestroyBodyPart(bodyPart, damageInfo.DamageType);
-                                    }
-                                }
-                            }
-
-                            return true;
-                        }
+                        damage = Math.Max(0, currentHealth.Current - 1f);
                     }
                 }
             }
