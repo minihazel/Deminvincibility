@@ -34,9 +34,20 @@ namespace Deminvincibility.Patches
                     return true;
                 }
 
-                // The method to destroy body parts will be allowed to run depending on the value of AllowBlacking
-                // If the setting is enabled, then the method will run as usual. If the setting is disabled, then the method will be skipped
-                return DeminvicibilityPlugin.AllowBlacking.Value;
+                // If AllowBlacking is disabled, we prevent the original method from running regardless
+                if (!DeminvicibilityPlugin.AllowBlacking.Value)
+                {
+                    return false;  // skip original method
+                } 
+
+                // If limb blacking is enabled, but Head & Thorax are protected (and being currently hit), we'll skip the original method here
+                if (!DeminvicibilityPlugin.AllowBlackingHeadAndThorax.Value && (bodyPart == EBodyPart.Head || bodyPart == EBodyPart.Chest))
+                {
+                    return false; // skip original method
+                }
+
+                // In all other cases, we let the original method run
+                return true; // run original method
 
                 // var healthController = __instance.Player.ActiveHealthController;
                 // var currentHealth = healthController.GetBodyPartHealth(bodyPart, false);

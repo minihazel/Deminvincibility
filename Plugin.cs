@@ -18,6 +18,7 @@ namespace Deminvincibility
         public static ConfigEntry<bool> Keep1Health { get; set; }
         public static ConfigEntry<bool> Allow0HpLimbs { get; set; }
         public static ConfigEntry<bool> AllowBlacking { get; set; }
+        public static ConfigEntry<bool> AllowBlackingHeadAndThorax { get; set; }
         // public static ConfigEntry<string> Keep1HealthSelection { get; set; }
         // public string[] Keep1HealthSelectionList = new string[] { "All", "Head & Thorax" };
         public static ConfigEntry<bool> MedicineBool { get; set; }
@@ -64,6 +65,11 @@ namespace Deminvincibility
                     null,
                     new ConfigurationManagerAttributes { IsAdvanced = false, Order = 5 }));
 
+                AllowBlackingHeadAndThorax = Config.Bind("1. Health", "Allow blacking of Head & Thorax", false,
+                    new ConfigDescription("If enabled, Head & Thorax will be blacked out when they reach 0hp. This setting is ignored if \'Allow blacking of limbs\' is disabled.",
+                        null,
+                        new ConfigurationManagerAttributes { IsAdvanced = false, Order = 4 }));
+
                 /*
                 Keep1HealthSelection = Config.Bind("1. Health", "Keep 1 Health Selection", "All",
                     new ConfigDescription("Select which body parts to keep above 1 health",
@@ -74,10 +80,10 @@ namespace Deminvincibility
                 MedicineBool = Config.Bind("1. Health", "Ignore health side effects?", false,
                     new ConfigDescription("If enabled, fractures, bleeds and other forms of side effects to your health will be auto-healed.\n\nPSA: Disabling this could cause unintended side effects, use caution.",
                     null,
-                    new ConfigurationManagerAttributes { IsAdvanced = false, Order = 4 }));
+                    new ConfigurationManagerAttributes { IsAdvanced = false, Order = 3 }));
 
                 CustomDamageModeVal = Config.Bind("1. Health", "% Damage received", 100, new ConfigDescription("Set perceived damage in percent",
-                new AcceptableValueRange<int>(1, 100), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = true, Order = 3 }));
+                new AcceptableValueRange<int>(1, 100), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = true, Order = 2 }));
             }
 
             // Protection disable
@@ -88,7 +94,7 @@ namespace Deminvincibility
                     null,
                     new ConfigurationManagerAttributes { IsAdvanced = false, Order = 3 }));
 
-                SecondChanceEffectRemoval = Config.Bind("2. Death", "Second chance lethal effect removal", true,
+                SecondChanceEffectRemoval = Config.Bind("2. Death", "Second chance health effect removal", true,
                     new ConfigDescription("If enabled, all negative health effects (bleeds, fractures, etc.) will be removed from your character when second chance triggers.",
                         null,
                         new ConfigurationManagerAttributes { IsAdvanced = false, Order = 2 }));
