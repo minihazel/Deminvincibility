@@ -22,66 +22,62 @@
   
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>..\..\..\Desktop\Refs\0Harmony.dll</HintPath>
+      <HintPath>.\references\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="aki-core">
-      <HintPath>..\..\..\Desktop\Refs\aki-core.dll</HintPath>
+      <HintPath>.\references\aki-core.dll</HintPath>
     </Reference>
     <Reference Include="aki-custom">
-      <HintPath>..\..\..\Desktop\Refs\aki-custom.dll</HintPath>
+      <HintPath>.\references\aki-custom.dll</HintPath>
     </Reference>
     <Reference Include="aki-debugging">
-      <HintPath>..\..\..\Desktop\Refs\aki-debugging.dll</HintPath>
+      <HintPath>.\references\aki-debugging.dll</HintPath>
     </Reference>
     <Reference Include="aki-singleplayer">
-      <HintPath>..\..\..\Desktop\Refs\aki-singleplayer.dll</HintPath>
+      <HintPath>.\references\aki-singleplayer.dll</HintPath>
     </Reference>
     <Reference Include="Aki.Build">
-      <HintPath>..\..\..\Desktop\Refs\Aki.Build.dll</HintPath>
+      <HintPath>.\references\Aki.Build.dll</HintPath>
     </Reference>
     <Reference Include="Aki.Common">
-      <HintPath>..\..\..\Desktop\Refs\Aki.Common.dll</HintPath>
+      <HintPath>.\references\Aki.Common.dll</HintPath>
     </Reference>
     <Reference Include="Aki.Reflection">
-      <HintPath>..\..\..\Desktop\Refs\Aki.Reflection.dll</HintPath>
+      <HintPath>.\references\Aki.Reflection.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\..\..\SPT-AKI 3.7.1\EscapeFromTarkov_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>.\references\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
-      <HintPath>..\..\..\Desktop\Refs\BepInEx.dll</HintPath>
+      <HintPath>.\references\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="bsg.console.core">
-      <HintPath>..\..\..\Desktop\Refs\bsg.console.core.dll</HintPath>
+      <HintPath>.\references\bsg.console.core.dll</HintPath>
     </Reference>
     <Reference Include="Comfort">
-      <HintPath>..\..\..\Desktop\Refs\Comfort.dll</HintPath>
+      <HintPath>.\references\Comfort.dll</HintPath>
     </Reference>
     <Reference Include="Comfort.Unity">
-      <HintPath>..\..\..\Desktop\Refs\Comfort.Unity.dll</HintPath>
+      <HintPath>.\references\Comfort.Unity.dll</HintPath>
     </Reference>
     <Reference Include="ConfigurationManager">
-      <HintPath>..\..\..\Desktop\Refs\ConfigurationManager.dll</HintPath>
+      <HintPath>.\references\ConfigurationManager.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>..\..\..\Desktop\Refs\UnityEngine.dll</HintPath>
+      <HintPath>.\references\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\Desktop\Refs\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>.\references\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>..\..\..\Desktop\Refs\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>.\references\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>..\..\..\Desktop\Refs\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>.\references\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
   </ItemGroup>
-  
-  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="FOR /F %25%25x IN ('tasklist /NH /FI &quot;IMAGENAME eq EscapeFromTarkov.exe&quot;') DO IF %25%25x == EscapeFromTarkov.exe (&#xD;&#xA;taskkill /F /IM EscapeFromTarkov.exe&#xD;&#xA;ping -n  2 127.0.0.1 &gt;NUL&#xD;&#xA;)&#xD;&#xA;&#xD;&#xA;powershell.exe -ExecutionPolicy Bypass -NoProfile -NonInteractive -File $(ProjectDir)\VersionChecker\setbuild.ps1" />
-  </Target>
-  
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy &quot;$(TargetPath)&quot; &quot;C:\SPT-AKI 3.7.1\BepInEx\plugins\$(TargetName).dll&quot;&#xD;&#xA;&#xD;&#xA;if $(ConfigurationName) == Debug (&#xD;&#xA;    copy &quot;$(TargetDir)$(TargetName).pdb&quot; &quot;C:\SPT-AKI 3.7.1\BepInEx\plugins\$(TargetName).pdb&quot;&#xD;&#xA;) else (&#xD;&#xA;    del &quot;C:\SPT-AKI 3.7.1\BepInEx\plugins\$(TargetName).pdb&quot;&#xD;&#xA;)&#xD;&#xA;" />
+    <Exec Command="xcopy /y /f &quot;$(TargetPath)&quot; &quot;$(ProjectDir)\Build\&quot;" />
   </Target>
 </Project>

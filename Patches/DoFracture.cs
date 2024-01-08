@@ -2,22 +2,15 @@
 using EFT.HealthSystem;
 using HarmonyLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Deminvincibility.Patches
 {
     internal class DoFracture : ModulePatch
     {
-        private static ActiveHealthController healthController;
-        private static ValueStruct currentHealth;
-
         protected override MethodBase GetTargetMethod()
         {
-            return AccessTools.Method(typeof(ActiveHealthController), "DoFracture");
+            return AccessTools.Method(typeof(ActiveHealthController), nameof(ActiveHealthController.DoFracture));
         }
 
         [PatchPrefix]
@@ -25,25 +18,30 @@ namespace Deminvincibility.Patches
         {
             try
             {
-                if (__instance.Player != null && __instance.Player.IsYourPlayer)
+                // Target is not our player - don't do anything
+                if (__instance.Player == null || !__instance.Player.IsYourPlayer)
                 {
-                    if (DeminvicibilityPlugin.medicineBool.Value && DeminvicibilityPlugin.Keep1Health.Value)
-                    {
-                        return false;
-                    }
-                    else if (!DeminvicibilityPlugin.medicineBool.Value)
-                    {
-                        if (bodyPart == EBodyPart.Head || bodyPart == EBodyPart.Chest)
-                            return false;
-                        else
-                            return true;
-                    }
+                    return true;
+                }
+
+                // If Keep1Health and MedicineBool are enabled, then the method to apply a Fracture effect is skipped
+                if (DeminvicibilityPlugin.MedicineBool.Value && DeminvicibilityPlugin.Keep1Health.Value)
+                {
+                    return false;
+                }
+
+                // If Keep1Health is enabled, but MedicineBool is disabled, then we only protect the head and chest
+                if (!DeminvicibilityPlugin.MedicineBool.Value)
+                {
+                    // If it's not Head or Chest, then run the original method. Otherwise, skip it
+                    return bodyPart != EBodyPart.Head && bodyPart != EBodyPart.Chest;
                 }
             }
             catch (Exception e)
             {
                 Logger.LogError(e);
             }
+
             return true;
         }
     }
