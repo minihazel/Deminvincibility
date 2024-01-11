@@ -106,7 +106,7 @@ namespace Deminvincibility.Patches
                             {
                                 // Invoke the FullRestoreBodyPart method. Should fully heal the limb
                                 bodyPartRestoreMethod.Invoke(hc, new object[] { EBodyPart.Head });
-                                // Damage the limb with Undefined an undefined damage type down to the desired HP
+                                // Damage the limb with an undefined damage type down to the desired HP
                                 hc.ApplyDamage(EBodyPart.Head, Math.Abs(targetHeadHealth - headHealth.Maximum), new DamageInfo { DamageType = EDamageType.Undefined });
                             }
 
