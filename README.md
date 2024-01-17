@@ -16,6 +16,12 @@ Currently, the following features are implemented:
 3. Drag and drop the `BepInEx` folder straight into your SPT folder (where `Aki.Server.exe` is)
 4. Profit
 
+## Project Setup
+Copy all DLL files from the following SPT directories into `\references`:
+- `\EscapeFromTarkov_Data\Managed\`
+- `\BepInEx\plugins\spt\`
+- `\BepInEx\core\`
+
 ## Credits
 A huge thanks to the following people:
 - Props for developing DadGamerMode. Without him and his experience, this wouldn't have been possible!

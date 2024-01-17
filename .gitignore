@@ -3,6 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Custom ignores
+references/*
+Build/*
+!references/.gitkeep
+
 # User-specific files
 *.rsuser
 *.suo
