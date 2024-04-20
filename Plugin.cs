@@ -1,164 +1,137 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Diagnostics;
-using System.Reflection;
-using Aki.Reflection.Patching;
 using BepInEx;
 using BepInEx.Configuration;
-using Comfort.Common;
-using EFT;
-using System.Collections.Generic;
+using Deminvincibility.Model;
+using Deminvincibility.Patches;
+using EFT.UI;
+using static VersionChecker.TarkovVersion;
 
-namespace MapFrames
+namespace Deminvincibility
 {
-    [BepInPlugin("com.hazelify.mapframes", "MapFrames", "1.0.0")]
-    public class MapFramesPlugin : BaseUnityPlugin
+    [BepInPlugin("com.hazelify.deminvincibility", "Deminvincibility", "1.4.0")]
+    public class DeminvicibilityPlugin : BaseUnityPlugin
     {
         private static bool placeholder = true;
+        private static string credits = "Thanks Props <3 Ily https://github.com/dvize/DadGamerMode";
 
-        public static ConfigEntry<bool> toggleMod { get; set; }
-        public static ConfigEntry<int> bigmap { get; set; }
-        public static ConfigEntry<int> factory4_day { get; set; }
-        public static ConfigEntry<int> factory4_night { get; set; }
-        public static ConfigEntry<int> interchange { get; set; }
-        public static ConfigEntry<int> laboratory { get; set; }
-        public static ConfigEntry<int> lighthouse { get; set; }
-        public static ConfigEntry<int> rezervbase { get; set; }
-        public static ConfigEntry<int> shoreline { get; set; }
-        public static ConfigEntry<int> tarkovstreets { get; set; }
-        public static ConfigEntry<int> woods { get; set; }
+        public static ConfigEntry<bool> Keep1Health { get; set; }
+        public static ConfigEntry<bool> Allow0HpLimbs { get; set; }
+        public static ConfigEntry<bool> AllowBlacking { get; set; }
+        public static ConfigEntry<bool> AllowBlackingHeadAndThorax { get; set; }
+        // public static ConfigEntry<string> Keep1HealthSelection { get; set; }
+        // public string[] Keep1HealthSelectionList = new string[] { "All", "Head & Thorax" };
+        public static ConfigEntry<bool> MedicineBool { get; set; }
+        public static ConfigEntry<int> CustomDamageModeVal { get; set; }
+        public static ConfigEntry<bool> SecondChanceProtection { get; set; }
+        public static ConfigEntry<bool> SecondChanceEffectRemoval { get; set; }
+        public static ConfigEntry<SecondChanceRestoreEnum> SecondChanceHealthRestoreAmount { get; set; }
+        // public static ConfigEntry<string> hpDeath { get; set; }
+        // public string[] hpList = { "15", "50 HP", "100 HP", "150 HP" };
 
         private void Awake()
         {
+            // CheckSPTVersion();
             InitConfig();
-            new NewGamePatch().Enable();
+            ApplyPatches();
+        }
+
+        private void ApplyPatches()
+        {
+            // new NewGamePatch().Enable();
+            new DestroyBodyPartPatch().Enable();
+            new ApplyDamage().Enable();
+            new DoFracture().Enable();
+            new Kill().Enable();
         }
 
         private void InitConfig()
         {
+            // - Keep1Health section
             if (placeholder)
             {
-                toggleMod = Config.Bind("A. Toggle mod", "Enable mod", false,
-                    new ConfigDescription("Enable or disable the mod",
+                Keep1Health = Config.Bind("1. Health", "1 HP Mode", false,
+                    new ConfigDescription("Enable to keep yourself from dying",
                     null,
-                    new ConfigurationManagerAttributes { IsAdvanced = false, Order = 1 }));
+                    new ConfigurationManagerAttributes { IsAdvanced = false, Order = 7 }));
 
-                bigmap = Config.Bind("B. Framerates", "Customs", 60, new ConfigDescription("Set maximum framerate for Customs",
-                new AcceptableValueRange<int>(30, 240), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = false, Order = 1 }));
+                Allow0HpLimbs = Config.Bind("1. Health", "Allow 0hp on limbs", false,
+                    new ConfigDescription("If enabled, Keep 1 Health on will allow arms and legs to hit 0 hp.",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdvanced = false, Order = 6 }));
 
-                factory4_day = Config.Bind("B. Framerates", "Factory Night", 60, new ConfigDescription("Set maximum framerate for Factory Day",
-                new AcceptableValueRange<int>(30, 240), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = false, Order = 2 }));
+                AllowBlacking = Config.Bind("1. Health", "Allow blacking of limbs", false,
+                    new ConfigDescription("If enabled, Keep 1 Health on will cause blacking of limbs when they reach 0hp.",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdvanced = false, Order = 5 }));
 
-                factory4_night = Config.Bind("B. Framerates", "Factory Night", 60, new ConfigDescription("Set maximum framerate for Factory Night",
-                new AcceptableValueRange<int>(30, 240), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = false, Order = 3 }));
+                AllowBlackingHeadAndThorax = Config.Bind("1. Health", "Allow blacking of Head & Thorax", false,
+                    new ConfigDescription("If enabled, Head & Thorax will be blacked out when they reach 0hp. This setting is ignored if \'Allow blacking of limbs\' is disabled.",
+                        null,
+                        new ConfigurationManagerAttributes { IsAdvanced = false, Order = 4 }));
 
-                interchange = Config.Bind("B. Framerates", "Interchange", 60, new ConfigDescription("Set maximum framerate for Interchange",
-                new AcceptableValueRange<int>(30, 240), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = false, Order = 4 }));
+                /*
+                Keep1HealthSelection = Config.Bind("1. Health", "Keep 1 Health Selection", "All",
+                    new ConfigDescription("Select which body parts to keep above 1 health",
+                    new AcceptableValueList<string>(Keep1HealthSelectionList),
+                    new ConfigurationManagerAttributes { IsAdvanced = false, Order = 5 }));
+                */
 
-                laboratory = Config.Bind("B. Framerates", "Labs", 60, new ConfigDescription("Set maximum framerate for Labs",
-                new AcceptableValueRange<int>(30, 240), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = false, Order = 5 }));
+                MedicineBool = Config.Bind("1. Health", "Ignore health side effects?", false,
+                    new ConfigDescription("If enabled, fractures, bleeds and other forms of side effects to your health will be auto-healed.\n\nPSA: Disabling this could cause unintended side effects, use caution.",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdvanced = false, Order = 3 }));
 
-                lighthouse = Config.Bind("B. Framerates", "Lighthouse", 60, new ConfigDescription("Set maximum framerate for Lighthouse",
-                new AcceptableValueRange<int>(30, 240), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = false, Order = 6 }));
-
-                rezervbase = Config.Bind("B. Framerates", "Reserve", 60, new ConfigDescription("Set maximum framerate for Reserve",
-                new AcceptableValueRange<int>(30, 240), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = false, Order = 7 }));
-
-                shoreline = Config.Bind("B. Framerates", "Snoreline", 60, new ConfigDescription("Set maximum framerate for Snoreline",
-                new AcceptableValueRange<int>(30, 240), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = false, Order = 8 }));
-
-                tarkovstreets = Config.Bind("B. Framerates", "Streets of Tarkov", 60, new ConfigDescription("Set maximum framerate for Streets of Tarkov",
-                new AcceptableValueRange<int>(30, 240), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = false, Order = 9 }));
-
-                woods = Config.Bind("B. Framerates", "Woods", 60, new ConfigDescription("Set maximum framerate for Woods",
-                new AcceptableValueRange<int>(30, 240), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = false, Order = 10 }));
+                CustomDamageModeVal = Config.Bind("1. Health", "% Damage received", 100, new ConfigDescription("Set perceived damage in percent",
+                new AcceptableValueRange<int>(1, 100), new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = true, Order = 2 }));
             }
-        }
-    }
-    internal class NewGamePatch : ModulePatch
-    {
-        protected override MethodBase GetTargetMethod() => typeof(GameWorld).GetMethod("OnGameStarted");
 
-        [PatchPrefix]
-        public static void PatchPrefix()
-        {
-            InRaidMono.Init();
-        }
-    }
-    public class InRaidMono : MonoBehaviour
-    {
-        public int targetFramerate;
-        public static InRaidMono Instance;
-
-        public static void Init()
-        {
-            if (Singleton<GameWorld>.Instantiated)
+            // Protection disable
+            if (placeholder)
             {
-                GameWorld gameworld = Singleton<GameWorld>.Instance;
-                Instance = gameworld.GetOrAddComponent<InRaidMono>();
-                UnityEngine.Debug.Log($"MapFrames active on map {gameworld.LocationId}");
+                SecondChanceProtection = Config.Bind("2. Death", "Enable second chance protection?", false,
+                    new ConfigDescription("If enabled, if you take a hit that would normally kill you, you\'ll be given a second chance to survive.",
+                    null,
+                    new ConfigurationManagerAttributes { IsAdvanced = false, Order = 3 }));
 
-                switch (gameworld.LocationId.ToLower())
-                {
-                    case "bigmap":
-                        Instance.targetFramerate = 120;
-                        break;
-                    case "factory4_day":
-                        Instance.targetFramerate = 144;
-                        break;
-                    case "factory4_night":
-                        Instance.targetFramerate = 144;
-                        break;
-                    case "interchange":
-                        Instance.targetFramerate = 120;
-                        break;
-                    case "laboratory":
-                        Instance.targetFramerate = 144;
-                        break;
-                    case "lighthouse":
-                        Instance.targetFramerate = 60;
-                        break;
-                    case "rezervbase":
-                        Instance.targetFramerate = 120;
-                        break;
-                    case "shoreline":
-                        Instance.targetFramerate = 120;
-                        break;
-                    case "tarkovstreets":
-                        Instance.targetFramerate = 60;
-                        break;
-                    case "woods":
-                        Instance.targetFramerate = 120;
-                        break;
-                    default:
-                        Instance.targetFramerate = 144;
-                        break;
-                }
+                SecondChanceEffectRemoval = Config.Bind("2. Death", "Second chance health effect removal", true,
+                    new ConfigDescription("If enabled, all negative health effects (bleeds, fractures, etc.) will be removed from your character when second chance triggers.",
+                        null,
+                        new ConfigurationManagerAttributes { IsAdvanced = false, Order = 2 }));
+
+                SecondChanceHealthRestoreAmount = Config.Bind("2. Death", "Second chance health restore on critical limbs", SecondChanceRestoreEnum.OneHealth,
+                    new ConfigDescription("Choose what HP should be set on the Head and Thorax when second chance protection triggers. Will never remove health if the limb has more than the set amount. \n\n\'None\' and \'1HP\' options are risky if effect removal is disabled.", 
+                        null,
+                        new ConfigurationManagerAttributes { IsAdvanced = false, Order = 1 }));
+
+                // hpDeath = Config.Bind("2. Death", "Disable protection below:", "15 HP",
+                // new ConfigDescription("",
+                // new AcceptableValueList<string>(hpList),
+                // new ConfigurationManagerAttributes { IsAdvanced = false, Order = 1 }));
             }
         }
 
-        void Update()
+        private void CheckSPTVersion()
         {
-            Application.targetFrameRate = targetFramerate;
+            var currentVersion = FileVersionInfo.GetVersionInfo(BepInEx.Paths.ExecutablePath).FilePrivatePart;
+            var buildVersion = BuildVersion;
+
+            if (currentVersion != buildVersion)
+            {
+                Logger.LogError($"ERROR: This version of {Info.Metadata.Name} v{Info.Metadata.Version} was built for Tarkov {buildVersion}, but you are running {currentVersion}. Please download the correct plugin version.");
+                ConsoleScreen.LogError($"ERROR: This version of {Info.Metadata.Name} v{Info.Metadata.Version} was built for Tarkov {buildVersion}, but you are running {currentVersion}. Please download the correct plugin version.");
+                throw new Exception($"Invalid EFT Version ({currentVersion} != {buildVersion})");
+            }
         }
-    }
-    internal sealed class ConfigurationManagerAttributes
-    {
-        public bool? ShowRangeAsPercent;
-        public System.Action<BepInEx.Configuration.ConfigEntryBase> CustomDrawer;
-        public CustomHotkeyDrawerFunc CustomHotkeyDrawer;
-        public delegate void CustomHotkeyDrawerFunc(BepInEx.Configuration.ConfigEntryBase setting, ref bool isCurrentlyAcceptingInput);
-        public bool? Browsable;
-        public string Category;
-        public object DefaultValue;
-        public bool? HideDefaultButton;
-        public bool? HideSettingName;
-        public string Description;
-        public string DispName;
-        public int? Order;
-        public bool? ReadOnly;
-        public bool? IsAdvanced;
-        public System.Func<object, string> ObjToStr;
-        public System.Func<string, object> StrToObj;
+
+        // internal class NewGamePatch : ModulePatch
+        // {
+        //     protected override MethodBase GetTargetMethod() => typeof(GameWorld).GetMethod(nameof(GameWorld.OnGameStarted));
+        //
+        //     [PatchPrefix]
+        //     private static void PatchPrefix()
+        //     {
+        //     }
+        // }
     }
 }
