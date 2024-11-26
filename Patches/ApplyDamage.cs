@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Reflection;
-using Aki.Reflection.Patching;
+using SPT.Reflection.Patching;
 using EFT.HealthSystem;
 using HarmonyLib;
+using EFT;
 
 namespace Deminvincibility.Patches
 {
@@ -14,17 +15,17 @@ namespace Deminvincibility.Patches
         }
 
         [PatchPrefix]
-        private static bool Prefix(ActiveHealthController __instance, ref float damage, EBodyPart bodyPart, DamageInfo damageInfo)
+        private static bool Prefix(ActiveHealthController __instance, Player ___Player, ref float damage, EBodyPart bodyPart, DamageInfoStruct damageInfo)
         {
             try
             {
                 // Target is not our player - don't do anything
-                if (__instance.Player == null || !__instance.Player.IsYourPlayer)
+                if (___Player == null || !___Player.IsYourPlayer)
                 {
                     return true;
                 }
 
-                var healthController = __instance.Player.ActiveHealthController;
+                var healthController = ___Player.ActiveHealthController;
                 var currentHealth = healthController.GetBodyPartHealth(bodyPart, false);
 
                 // Scale damage based on our set damage %

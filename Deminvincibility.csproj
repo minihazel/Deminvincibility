@@ -22,58 +22,55 @@
   
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>.\references\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="aki-core">
-      <HintPath>.\references\aki-core.dll</HintPath>
-    </Reference>
-    <Reference Include="aki-custom">
-      <HintPath>.\references\aki-custom.dll</HintPath>
-    </Reference>
-    <Reference Include="aki-debugging">
-      <HintPath>.\references\aki-debugging.dll</HintPath>
-    </Reference>
-    <Reference Include="aki-singleplayer">
-      <HintPath>.\references\aki-singleplayer.dll</HintPath>
-    </Reference>
-    <Reference Include="Aki.Build">
-      <HintPath>.\references\Aki.Build.dll</HintPath>
-    </Reference>
-    <Reference Include="Aki.Common">
-      <HintPath>.\references\Aki.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Aki.Reflection">
-      <HintPath>.\references\Aki.Reflection.dll</HintPath>
+      <HintPath>..\..\..\Desktop\Assemblies\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>.\references\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\Desktop\Assemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
-      <HintPath>.\references\BepInEx.dll</HintPath>
+      <HintPath>..\..\..\Desktop\Assemblies\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="bsg.console.core">
-      <HintPath>.\references\bsg.console.core.dll</HintPath>
+      <HintPath>..\..\..\Desktop\Assemblies\bsg.console.core.dll</HintPath>
     </Reference>
     <Reference Include="Comfort">
-      <HintPath>.\references\Comfort.dll</HintPath>
+      <HintPath>..\..\..\Desktop\Assemblies\Comfort.dll</HintPath>
     </Reference>
     <Reference Include="Comfort.Unity">
-      <HintPath>.\references\Comfort.Unity.dll</HintPath>
+      <HintPath>..\..\..\Desktop\Assemblies\Comfort.Unity.dll</HintPath>
     </Reference>
     <Reference Include="ConfigurationManager">
-      <HintPath>.\references\ConfigurationManager.dll</HintPath>
+      <HintPath>..\..\..\Desktop\Assemblies\ConfigurationManager.dll</HintPath>
+    </Reference>
+    <Reference Include="spt-common">
+      <HintPath>..\..\..\Desktop\Assemblies\spt-common.dll</HintPath>
+    </Reference>
+    <Reference Include="spt-core">
+      <HintPath>..\..\..\Desktop\Assemblies\spt-core.dll</HintPath>
+    </Reference>
+    <Reference Include="spt-custom">
+      <HintPath>..\..\..\Desktop\Assemblies\spt-custom.dll</HintPath>
+    </Reference>
+    <Reference Include="spt-debugging">
+      <HintPath>..\..\..\Desktop\Assemblies\spt-debugging.dll</HintPath>
+    </Reference>
+    <Reference Include="spt-reflection">
+      <HintPath>..\..\..\Desktop\Assemblies\spt-reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="spt-singleplayer">
+      <HintPath>..\..\..\Desktop\Assemblies\spt-singleplayer.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>.\references\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>.\references\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\..\..\Desktop\Assemblies\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>.\references\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>..\..\..\Desktop\Assemblies\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>.\references\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>..\..\..\Desktop\Assemblies\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 

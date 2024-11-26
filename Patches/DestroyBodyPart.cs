@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Reflection;
-using Aki.Reflection.Patching;
+using SPT.Reflection.Patching;
 using EFT;
 using EFT.HealthSystem;
 using HarmonyLib;
@@ -18,12 +18,12 @@ namespace Deminvincibility.Patches
         }
 
         [PatchPrefix]
-        private static bool Prefix(ActiveHealthController __instance, EBodyPart bodyPart, EDamageType damageType)
+        private static bool Prefix(ActiveHealthController __instance, Player ___Player, EBodyPart bodyPart, EDamageType damageType)
         {
             try
             {
                 // Target is not our player - don't do anything
-                if (__instance.Player == null || !__instance.Player.IsYourPlayer)
+                if (___Player == null || !___Player.IsYourPlayer)
                 {
                     return true;
                 }

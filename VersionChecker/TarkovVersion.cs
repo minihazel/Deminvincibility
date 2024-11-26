@@ -39,6 +39,8 @@ namespace VersionChecker
         /// <param name="Info">The PluginInfo object for the plugin, used to get the plugin name and version</param>
         /// <param name="Config">A BepinEx ConfigFile object, if provided, a custom message will be added to the F12 menu</param>
         /// <returns></returns>
+        /// 
+        /*
         public static bool CheckEftVersion(ManualLogSource Logger, PluginInfo Info, ConfigFile Config = null)
         {
             int currentVersion = FileVersionInfo.GetVersionInfo(BepInEx.Paths.ExecutablePath).FilePrivatePart;
@@ -68,7 +70,9 @@ namespace VersionChecker
 
             return true;
         }
+        */
 
+        /*
         static void ErrorLabelDrawer(ConfigEntryBase entry)
         {
             GUIStyle styleNormal = new GUIStyle(GUI.skin.label);
@@ -89,6 +93,7 @@ namespace VersionChecker
             GUILayout.Label("Plugin has been disabled!", styleError, new GUILayoutOption[] { GUILayout.ExpandWidth(true) });
             GUILayout.EndVertical();
         }
+        */
 
 #pragma warning disable 0169, 0414, 0649
         internal sealed class ConfigurationManagerAttributes

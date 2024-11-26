@@ -1,8 +1,9 @@
-﻿using Aki.Reflection.Patching;
+﻿using SPT.Reflection.Patching;
 using EFT.HealthSystem;
 using HarmonyLib;
 using System;
 using System.Reflection;
+using EFT;
 
 namespace Deminvincibility.Patches
 {
@@ -14,12 +15,12 @@ namespace Deminvincibility.Patches
         }
 
         [PatchPrefix]
-        private static bool Prefix(ActiveHealthController __instance, EBodyPart bodyPart)
+        private static bool Prefix(ActiveHealthController __instance, EBodyPart bodyPart, Player ___Player)
         {
             try
             {
                 // Target is not our player - don't do anything
-                if (__instance.Player == null || !__instance.Player.IsYourPlayer)
+                if (___Player == null || !___Player.IsYourPlayer)
                 {
                     return true;
                 }
