@@ -25,52 +25,55 @@
       <HintPath>..\..\..\Desktop\Assemblies\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\Desktop\Assemblies\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
       <HintPath>..\..\..\Desktop\Assemblies\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="bsg.console.core">
-      <HintPath>..\..\..\Desktop\Assemblies\bsg.console.core.dll</HintPath>
+      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\bsg.console.core.dll</HintPath>
     </Reference>
     <Reference Include="Comfort">
-      <HintPath>..\..\..\Desktop\Assemblies\Comfort.dll</HintPath>
+      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\Comfort.dll</HintPath>
     </Reference>
     <Reference Include="Comfort.Unity">
-      <HintPath>..\..\..\Desktop\Assemblies\Comfort.Unity.dll</HintPath>
+      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\Comfort.Unity.dll</HintPath>
     </Reference>
     <Reference Include="ConfigurationManager">
-      <HintPath>..\..\..\Desktop\Assemblies\ConfigurationManager.dll</HintPath>
+      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\ConfigurationManager.dll</HintPath>
+    </Reference>
+    <Reference Include="Sirenix.Serialization">
+      <HintPath>D:\SPT Iterations\SPT 3.11\EscapeFromTarkov_Data\Managed\Sirenix.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="spt-common">
-      <HintPath>..\..\..\Desktop\Assemblies\spt-common.dll</HintPath>
+      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\spt-common.dll</HintPath>
     </Reference>
     <Reference Include="spt-core">
-      <HintPath>..\..\..\Desktop\Assemblies\spt-core.dll</HintPath>
+      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\spt-core.dll</HintPath>
     </Reference>
     <Reference Include="spt-custom">
-      <HintPath>..\..\..\Desktop\Assemblies\spt-custom.dll</HintPath>
+      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\spt-custom.dll</HintPath>
     </Reference>
     <Reference Include="spt-debugging">
-      <HintPath>..\..\..\Desktop\Assemblies\spt-debugging.dll</HintPath>
+      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\spt-debugging.dll</HintPath>
     </Reference>
     <Reference Include="spt-reflection">
-      <HintPath>..\..\..\Desktop\Assemblies\spt-reflection.dll</HintPath>
+      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\spt-reflection.dll</HintPath>
     </Reference>
     <Reference Include="spt-singleplayer">
-      <HintPath>..\..\..\Desktop\Assemblies\spt-singleplayer.dll</HintPath>
+      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\spt-singleplayer.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
       <HintPath>.\references\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\Desktop\Assemblies\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>..\..\..\Desktop\Assemblies\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\UnityEngine.IMGUIModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>..\..\..\Desktop\Assemblies\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
   </ItemGroup>
 

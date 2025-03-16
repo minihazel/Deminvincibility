@@ -9,7 +9,7 @@ using static VersionChecker.TarkovVersion;
 
 namespace Deminvincibility
 {
-    [BepInPlugin("com.hazelify.deminvincibility", "Deminvincibility", "1.6.0")]
+    [BepInPlugin("com.hazelify.deminvincibility", "Deminvincibility", "1.7.0")]
     public class DeminvicibilityPlugin : BaseUnityPlugin
     {
         private static bool placeholder = true;
