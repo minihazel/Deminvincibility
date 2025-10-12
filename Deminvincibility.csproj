@@ -22,58 +22,67 @@
   
   <ItemGroup>
     <Reference Include="0Harmony">
-      <HintPath>..\..\..\Desktop\Assemblies\0Harmony.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\Core\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\Assembly-CSharp.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="BepInEx">
-      <HintPath>..\..\..\Desktop\Assemblies\BepInEx.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\Core\BepInEx.dll</HintPath>
     </Reference>
     <Reference Include="bsg.console.core">
-      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\bsg.console.core.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\bsg.console.core.dll</HintPath>
     </Reference>
     <Reference Include="Comfort">
-      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\Comfort.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\Comfort.dll</HintPath>
     </Reference>
     <Reference Include="Comfort.Unity">
-      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\Comfort.Unity.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\Comfort.Unity.dll</HintPath>
     </Reference>
     <Reference Include="ConfigurationManager">
       <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\ConfigurationManager.dll</HintPath>
     </Reference>
     <Reference Include="Sirenix.Serialization">
-      <HintPath>D:\SPT Iterations\SPT 3.11\EscapeFromTarkov_Data\Managed\Sirenix.Serialization.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\Sirenix.Serialization.dll</HintPath>
     </Reference>
     <Reference Include="spt-common">
-      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\spt-common.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\Core\spt-common.dll</HintPath>
     </Reference>
     <Reference Include="spt-core">
-      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\spt-core.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\Core\spt-core.dll</HintPath>
     </Reference>
     <Reference Include="spt-custom">
-      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\spt-custom.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\Core\spt-custom.dll</HintPath>
     </Reference>
     <Reference Include="spt-debugging">
-      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\spt-debugging.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\Core\spt-debugging.dll</HintPath>
     </Reference>
     <Reference Include="spt-reflection">
-      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\spt-reflection.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\Core\spt-reflection.dll</HintPath>
     </Reference>
     <Reference Include="spt-singleplayer">
-      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\spt-singleplayer.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\Core\spt-singleplayer.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine">
-      <HintPath>.\references\UnityEngine.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
-      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\UnityEngine.CoreModule.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.IMGUIModule">
-      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\UnityEngine.IMGUIModule.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\UnityEngine.IMGUIModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\UnityEngine.InputLegacyModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>..\..\..\Desktop\General\SPT\3.11 Assemblies\UnityEngine.TextRenderingModule.dll</HintPath>
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>D:\SPT Iterations\Assemblies 4.0\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
 
