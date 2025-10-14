@@ -13,15 +13,19 @@ namespace Deminvincibility.Patches
         {
             return AccessTools.Method(typeof(ActiveHealthController), nameof(ActiveHealthController.ApplyDamage));
         }
-
+        
         [PatchPrefix]
         private static bool Prefix(ActiveHealthController __instance, Player ___Player, ref float damage, EBodyPart bodyPart, DamageInfoStruct damageInfo)
         {
             try
             {
-                // Target is not our player - don't do anything
-                if (___Player == null || !___Player.IsYourPlayer)
+                /*
+                 * Check if the one who is taking damage is an AI AND
+                 * Check if the one who is dealing damage is a player
+                 */ 
+                if (___Player.IsAI && damageInfo.Player?.iPlayer?.IsYourPlayer == true)
                 {
+                    damage *= DeminvicibilityPlugin.DamageToEnemiesMultiplier.Value;
                     return true;
                 }
 
