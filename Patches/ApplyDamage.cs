@@ -9,6 +9,17 @@ namespace Deminvincibility.Patches
 {
     internal class ApplyDamage : ModulePatch
     {
+        private static readonly EBodyPart[] bodyParts =
+        {
+            EBodyPart.Head,
+            EBodyPart.Chest,
+            EBodyPart.Stomach,
+            EBodyPart.LeftArm,
+            EBodyPart.RightArm,
+            EBodyPart.LeftLeg,
+            EBodyPart.RightLeg
+        };
+
         protected override MethodBase GetTargetMethod()
         {
             return AccessTools.Method(typeof(ActiveHealthController), nameof(ActiveHealthController.ApplyDamage));
@@ -41,18 +52,8 @@ namespace Deminvincibility.Patches
                 // Remove negative health effects
                 if (DeminvicibilityPlugin.MedicineBool.Value)
                 {
-                    EBodyPart[] bParts =
-                    {
-                        EBodyPart.Head,
-                        EBodyPart.Chest,
-                        EBodyPart.Stomach,
-                        EBodyPart.LeftArm,
-                        EBodyPart.RightArm,
-                        EBodyPart.LeftLeg,
-                        EBodyPart.RightLeg
-                    };
 
-                    foreach (var bPart in bParts)
+                    foreach (EBodyPart bPart in bodyParts)
                     {
                         healthController.RemoveNegativeEffects(bPart);
                     }
