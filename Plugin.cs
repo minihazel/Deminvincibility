@@ -23,7 +23,6 @@ namespace Deminvincibility
         public static ConfigEntry<bool> SecondChanceProtection { get; private set; }
         public static ConfigEntry<bool> SecondChanceEffectRemoval { get; private set; }
         public static ConfigEntry<SecondChanceRestoreEnum> SecondChanceHealthRestoreAmount { get; private set; }
-        public static ConfigEntry<int> DamageToEnemiesMultiplier { get; private set; }
 
         private void Awake()
         {
@@ -74,11 +73,6 @@ namespace Deminvincibility
                 "Set perceived damage in percent",
                 new AcceptableValueRange<int>(1, 100),
                 new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = true, Order = 2 }));
-            
-            DamageToEnemiesMultiplier = Config.Bind("1. Health", "Damage to enemies multiplier", 1, new ConfigDescription(
-                "Damage TO enemies is multiplied by this value.\n\n1 = Damage * 1\n2 = Damage * 2\n3 = Damage * 3\n\nExample: 58 * 3 = 174, 174 total damage from 1 bullet",
-                new AcceptableValueRange<int>(1, 15),
-                new ConfigurationManagerAttributes { IsAdvanced = false, Order = 1 }));
 
             // 2. Death
             SecondChanceProtection = Config.Bind("2. Death", "Enable second chance protection?", false,

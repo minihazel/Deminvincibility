@@ -30,14 +30,9 @@ namespace Deminvincibility.Patches
         {
             try
             {
-                /*
-                 * Check if the one who is taking damage is an AI AND
-                 * Check if the one who is dealing damage is a player
-                 */
-
-                if (___Player.IsAI && damageInfo.Player?.iPlayer?.IsYourPlayer == true)
+                // Target is not our player - don't do anything
+                if (___Player == null || !___Player.IsYourPlayer && ___Player.IsAI)
                 {
-                    damage *= DeminvicibilityPlugin.DamageToEnemiesMultiplier.Value;
                     return true;
                 }
 
