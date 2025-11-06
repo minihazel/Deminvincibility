@@ -20,11 +20,11 @@ namespace Deminvincibility.Patches
             try
             {
                 // Target is not our player - don't do anything
-                if (___Player == null || !___Player.IsYourPlayer)
+                if (___Player == null || !___Player.IsYourPlayer && ___Player.IsAI)
                 {
                     return true;
                 }
-                
+
                 if (DeminvicibilityPlugin.Keep1Health.Value && DeminvicibilityPlugin.MedicineBool.Value)
                 {
                     Logger.LogMessage("DoBleed: Keep1Health & MedicineBool RETURN FALSE");

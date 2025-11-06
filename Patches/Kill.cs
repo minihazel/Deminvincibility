@@ -26,11 +26,11 @@ namespace Deminvincibility.Patches
             try
             {
                 // Target is not our player - don't do anything
-                if (___Player == null || !___Player.IsYourPlayer)
+                if (___Player == null || !___Player.IsYourPlayer && ___Player.IsAI)
                 {
                     return true;
                 }
-                
+
                 // If Keep1Health is enabled, prevent the original method from running and don't bother running the second chance protection code
                 if (DeminvicibilityPlugin.Keep1Health.Value)
                 {
