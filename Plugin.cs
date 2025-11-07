@@ -71,7 +71,7 @@ namespace Deminvincibility
 
             CustomDamageModeVal = Config.Bind("1. Health", "% Damage received", 100, new ConfigDescription(
                 "Set perceived damage in percent",
-                new AcceptableValueRange<int>(1, 100),
+                new AcceptableValueRange<int>(1, 99),
                 new ConfigurationManagerAttributes { IsAdvanced = false, ShowRangeAsPercent = true, Order = 2 }));
 
             // 2. Death

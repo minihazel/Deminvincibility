@@ -39,20 +39,19 @@ namespace Deminvincibility.Patches
                 var healthController = ___Player.ActiveHealthController;
                 var currentHealth = healthController.GetBodyPartHealth(bodyPart, false);
 
-                // Scale damage based on our set damage %
-                if (DeminvicibilityPlugin.CustomDamageModeVal.Value != 100)
-                {
-                    damage *= (float)DeminvicibilityPlugin.CustomDamageModeVal.Value / 100;
-                }
-
                 // Remove negative health effects
                 if (DeminvicibilityPlugin.MedicineBool.Value)
                 {
-
                     foreach (EBodyPart bPart in bodyParts)
                     {
                         healthController.RemoveNegativeEffects(bPart);
                     }
+                }
+
+                // Scale damage based on our set damage %
+                if (DeminvicibilityPlugin.CustomDamageModeVal.Value < 100)
+                {
+                    damage *= (float)DeminvicibilityPlugin.CustomDamageModeVal.Value / 100;
                 }
 
                 var healthSubtractedByDamage = currentHealth.Current - damage;
