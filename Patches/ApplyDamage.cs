@@ -1,9 +1,10 @@
-﻿using System;
-using System.Reflection;
-using SPT.Reflection.Patching;
+﻿using EFT;
+using EFT.Ballistics;
 using EFT.HealthSystem;
 using HarmonyLib;
-using EFT;
+using SPT.Reflection.Patching;
+using System;
+using System.Reflection;
 
 namespace Deminvincibility.Patches
 {
@@ -26,7 +27,7 @@ namespace Deminvincibility.Patches
         }
         
         [PatchPrefix]
-        private static bool Prefix(ActiveHealthController __instance, Player ___Player, ref float damage, EBodyPart bodyPart, DamageInfoStruct damageInfo)
+        private static bool Prefix(ActiveHealthController __instance, Player ___Player, ref float damage, EBodyPart bodyPart, DamageInfo damageInfo)
         {
             try
             {

@@ -13,7 +13,7 @@ namespace VersionChecker
     public class TarkovVersion : Attribute
     {
         private int version;
-        public TarkovVersion() : this(40087) { }
+        public TarkovVersion() : this(40743) { }
         public TarkovVersion(int version)
         {
             this.version = version;
@@ -40,6 +40,7 @@ namespace VersionChecker
         /// <param name="Config">A BepinEx ConfigFile object, if provided, a custom message will be added to the F12 menu</param>
         /// <returns></returns>
         /// 
+
         /*
         public static bool CheckEftVersion(ManualLogSource Logger, PluginInfo Info, ConfigFile Config = null)
         {
@@ -70,9 +71,7 @@ namespace VersionChecker
 
             return true;
         }
-        */
 
-        /*
         static void ErrorLabelDrawer(ConfigEntryBase entry)
         {
             GUIStyle styleNormal = new GUIStyle(GUI.skin.label);
@@ -93,7 +92,6 @@ namespace VersionChecker
             GUILayout.Label("Plugin has been disabled!", styleError, new GUILayoutOption[] { GUILayout.ExpandWidth(true) });
             GUILayout.EndVertical();
         }
-        */
 
 #pragma warning disable 0169, 0414, 0649
         internal sealed class ConfigurationManagerAttributes
@@ -115,5 +113,6 @@ namespace VersionChecker
             public System.Func<object, string> ObjToStr;
             public System.Func<string, object> StrToObj;
         }
+        */
     }
 }

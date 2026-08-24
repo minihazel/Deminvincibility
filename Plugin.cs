@@ -1,11 +1,7 @@
-﻿using System;
-using System.Diagnostics;
-using BepInEx;
+﻿using BepInEx;
 using BepInEx.Configuration;
 using Deminvincibility.Model;
 using Deminvincibility.Patches;
-using EFT.UI;
-using static VersionChecker.TarkovVersion;
 
 namespace Deminvincibility
 {

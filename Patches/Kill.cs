@@ -6,6 +6,7 @@ using Deminvincibility.Model;
 using EFT;
 using EFT.HealthSystem;
 using EFT.UI;
+using EFT.Ballistics;
 using HarmonyLib;
 
 namespace Deminvincibility.Patches
@@ -46,20 +47,6 @@ namespace Deminvincibility.Patches
                 var hc = ___Player.ActiveHealthController;
                 var headHealth = hc.GetBodyPartHealth(EBodyPart.Head, false);
                 var chestHealth = hc.GetBodyPartHealth(EBodyPart.Chest, false);
-                // var stomachHealth = hc.GetBodyPartHealth(EBodyPart.Stomach, false);
-                // var leftArmHealth = hc.GetBodyPartHealth(EBodyPart.LeftArm, false);
-                // var rightArmHealth = hc.GetBodyPartHealth(EBodyPart.RightArm, false);
-                // var leftLegHealth = hc.GetBodyPartHealth(EBodyPart.LeftLeg, false);
-                // var rightLegHealth = hc.GetBodyPartHealth(EBodyPart.RightLeg, false);
-                //
-                // float totalHealth =
-                //     headHealth.Current +
-                //     chestHealth.Current +
-                //     stomachHealth.Current +
-                //     leftArmHealth.Current +
-                //     rightArmHealth.Current +
-                //     leftLegHealth.Current +
-                //     rightLegHealth.Current;
 
                 if (DeminvicibilityPlugin.SecondChanceProtection.Value)
                 {
@@ -107,13 +94,13 @@ namespace Deminvincibility.Patches
                                 // Invoke the FullRestoreBodyPart method. Should fully heal the limb
                                 bodyPartRestoreMethod.Invoke(hc, new object[] { EBodyPart.Head });
                                 // Damage the limb with an undefined damage type down to the desired HP
-                                hc.ApplyDamage(EBodyPart.Head, Math.Abs(targetHeadHealth - headHealth.Maximum), new DamageInfoStruct { DamageType = EDamageType.Undefined });
+                                hc.ApplyDamage(EBodyPart.Head, Math.Abs(targetHeadHealth - headHealth.Maximum), new DamageInfo { DamageType = EDamageType.Undefined });
                             }
 
                             if (chestHealth.Current < targetChestHealth)
                             {
                                 bodyPartRestoreMethod.Invoke(hc, new object[] { EBodyPart.Chest });
-                                hc.ApplyDamage(EBodyPart.Chest, Math.Abs(targetHeadHealth - headHealth.Maximum), new DamageInfoStruct { DamageType = EDamageType.Undefined });
+                                hc.ApplyDamage(EBodyPart.Chest, Math.Abs(targetHeadHealth - headHealth.Maximum), new DamageInfo { DamageType = EDamageType.Undefined });
                             }
                         }
 

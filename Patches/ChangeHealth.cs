@@ -5,6 +5,7 @@ using EFT.HealthSystem;
 using EFT.UI;
 using HarmonyLib;
 using EFT;
+using EFT.Ballistics;
 
 namespace Deminvincibility.Patches
 {
@@ -16,7 +17,7 @@ namespace Deminvincibility.Patches
         }
 
         [PatchPrefix]
-        private static bool Prefix(ActiveHealthController __instance, Player ___Player, EBodyPart bodyPart, ref float value, DamageInfoStruct damageInfo)
+        private static bool Prefix(ActiveHealthController __instance, Player ___Player, EBodyPart bodyPart, ref float value, DamageInfo damageInfo)
         {
             try
             {
