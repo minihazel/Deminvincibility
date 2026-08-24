@@ -5,7 +5,7 @@ using Deminvincibility.Patches;
 
 namespace Deminvincibility
 {
-    [BepInPlugin("com.hazelify.deminvincibility", "Deminvincibility", "2.0.0")]
+    [BepInPlugin("com.hazelify.deminvincibility", "Deminvincibility", "2.2.0")]
     public class DeminvicibilityPlugin : BaseUnityPlugin
     {
         // private static string credits = "Thanks Props <3 Ily https://github.com/dvize/DadGamerMode";
